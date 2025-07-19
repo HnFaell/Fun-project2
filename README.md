@@ -39,54 +39,6 @@ Chatbot AI yang powerful dan user-friendly yang dibangun menggunakan Streamlit d
 - **Real-time Updates**: Statistik yang update secara otomatis
 - **Session History**: Riwayat percakapan tersimpan selama sesi
 
-## 🚀 Instalasi & Setup
-
-### Prerequisites
-```bash
-Python 3.8+
-pip (Python package manager)
-```
-
-### 1. Clone Repository
-```bash
-git clone https://github.com/yourusername/chatbot-ai.git
-cd chatbot-ai
-```
-
-### 2. Install Dependencies
-```bash
-pip install streamlit requests pillow python-dotenv
-```
-
-### 3. Setup API Key
-Dapatkan API Key dari [OpenRouter](https://openrouter.ai/keys) dan:
-
-**Option 1: Masukkan via Interface**
-- Jalankan aplikasi dan masukkan API key di sidebar
-
-**Option 2: Environment Variable**
-```bash
-# Buat file .env
-echo "OPENROUTER_API_KEY=your-api-key-here" > .env
-```
-
-**Option 3: Streamlit Secrets**
-```toml
-# .streamlit/secrets.toml
-openrouter_api_key = "your-api-key-here"
-```
-
-### 4. Tambahkan Foto Profil (Opsional)
-```bash
-# Letakkan foto dengan nama 'fael.jpg' di root directory
-cp your-photo.jpg fael.jpg
-```
-
-### 5. Jalankan Aplikasi
-```bash
-streamlit run chatbot2.py
-```
-
 ## 🎯 Cara Penggunaan
 
 ### 1. **Login & Setup Profil**
@@ -187,59 +139,6 @@ chatbot2.py
 - **Meta**: Llama 3 70B/405B Instruct
 - **Mistral**: Mistral Large, Medium, Codestral
 
-## 🔧 Konfigurasi Lanjutan
-
-### Environment Variables
-```bash
-# .env file
-OPENROUTER_API_KEY=your-api-key
-STREAMLIT_THEME=light
-STREAMLIT_SERVER_PORT=8501
-```
-
-### Streamlit Config
-```toml
-# .streamlit/config.toml
-[theme]
-primaryColor = "#667eea"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#f0f0f0"
-textColor = "#262730"
-font = "sans serif"
-```
-
-## 📁 Struktur Proyek
-
-```
-chatbot-ai/
-│
-├── chatbot2.py              # Main application file
-├── fael.jpg                 # Developer profile image (optional)
-├── requirements.txt         # Python dependencies
-├── .env                     # Environment variables (create this)
-├── .streamlit/
-│   ├── config.toml         # Streamlit configuration
-│   └── secrets.toml        # API keys (create this)
-├── README.md               # This file
-└── .gitignore             # Git ignore rules
-```
-
-## 🤝 Contributing
-
-Kontribusi sangat welcome! Silakan:
-
-1. **Fork** repository ini
-2. **Create** feature branch (`git checkout -b feature/AmazingFeature`)
-3. **Commit** perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** ke branch (`git push origin feature/AmazingFeature`)
-5. **Open** Pull Request
-
-### 📝 Contribution Guidelines
-- Ikuti PEP 8 untuk Python coding style
-- Tambahkan docstring untuk function baru
-- Update README jika menambah fitur baru
-- Test aplikasi sebelum submit PR
-
 ## 🐛 Troubleshooting
 
 ### ❌ **API Key Error**
@@ -266,10 +165,6 @@ ModuleNotFoundError: No module named 'streamlit'
 ```
 **Solusi**: Jalankan `pip install -r requirements.txt`
 
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
 ## 👨‍💻 Developer
 
 **M. Hanif**
@@ -279,29 +174,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 - **LinkedIn**: .
 - **GitHub**: .
 
-## 🙏 Acknowledgments
-
-- [Streamlit](https://streamlit.io/) - Amazing web app framework
-- [OpenRouter](https://openrouter.ai/) - Multi-model AI API platform  
-- [AI-Python Bootcamp](https://bootcamp-link.com) - Learning program
-- Open source community yang telah berkontribusi
-
-## 🔮 Roadmap
-
-### 🎯 **v2.0 (Planned)**
-- [ ] Database integration untuk chat history
-- [ ] Export chat ke PDF/TXT
-- [ ] Voice input/output support
-- [ ] Multi-language support
-
-### 🎯 **v2.1 (Future)**
-- [ ] File upload untuk document Q&A
-- [ ] Image generation capabilities
-- [ ] Plugin system untuk extensibility
-- [ ] Team collaboration features
-
 ---
 
 ⭐ **Jika project ini membantu Anda, jangan lupa untuk memberikan star!** ⭐
 
-![Footer](https://img.shields.io/badge/Made%20with-❤️-red.svg) ![Python](https://img.shields.io/badge/Made%20with-Python-blue.svg)
+---
