@@ -275,9 +275,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 **M. Hanif**
 - **Student ID**: REAPYTHON3WVTDF
 - **Program**: AI-Python Bootcamp
-- **Email**: [your-email@example.com]
-- **LinkedIn**: [Your LinkedIn Profile]
-- **GitHub**: [Your GitHub Profile]
+- **Email**: .
+- **LinkedIn**: .
+- **GitHub**: .
 
 ## 🙏 Acknowledgments
 
