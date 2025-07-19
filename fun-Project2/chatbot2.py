@@ -500,10 +500,10 @@ def render_sidebar():
         # Developer Identity Section - PINDAH KE ATAS
         st.markdown("### 👨‍💻 ABOUT DEVELOPER")
         try:
-            image = Image.open("https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzA4dzJiOGljdTNhMG45ZDNxcHZud2NpMzkyNXhjNThnZWxub3MwZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ZXkraFrlIW1D25M6ZJ/giphy.gif")
+            image = Image.open("Fael.jpg")
             st.image(image, width=200)
         except FileNotFoundError:
-            st.info("📷 Foto profil tidak ditemukan (https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzA4dzJiOGljdTNhMG45ZDNxcHZud2NpMzkyNXhjNThnZWxub3MwZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ZXkraFrlIW1D25M6ZJ/giphy.gif)")
+            st.info("📷 Foto profil tidak ditemukan (Fael.jpg)")
         
         st.write("**Nama** : M. Hanif")
         st.write("**Student ID** : REAPYTHON3WVTDF")
