@@ -4,7 +4,6 @@ Chatbot AI yang powerful dan user-friendly yang dibangun menggunakan Streamlit d
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.28%2B-red.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
 
 ## ✨ Fitur Utama
 
