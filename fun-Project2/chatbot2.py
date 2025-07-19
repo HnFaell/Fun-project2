@@ -500,7 +500,7 @@ def render_sidebar():
         # Developer Identity Section - PINDAH KE ATAS
         st.markdown("### 👨‍💻 ABOUT DEVELOPER")
         try:
-            image = Image.open("https://github.com/HnFaell/Fun-project2/blob/main/fun-Project2/fael.jpg")
+            image = Image.open("fael.jpg")
             st.image(image, width=200)
         except FileNotFoundError:
             st.info("📷 Foto profil tidak ditemukan (fael.jpg)")
