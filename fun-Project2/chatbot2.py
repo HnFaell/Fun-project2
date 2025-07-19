@@ -267,7 +267,7 @@ Saya dapat menjawab pertanyaan, menghasilkan ide, memberi solusi, dan menjadi te
 Dengan mengetahui nama dan{f" profesi" if job else ""} Anda, saya bisa memberikan respons yang lebih personal dan sesuai dengan kebutuhan Anda.
 
 Silakan ajukan pertanyaan Anda, {nama_panggilan if nama_panggilan else ""}!
-Saya siap menemani Kamu 😊
+Saya siap menemani Anda 😊
 ---
 *💡 Chatbot ini dibuat oleh **M. Hanif** sebagai project dari AI-Python Bootcamp*
             """
