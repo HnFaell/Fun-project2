@@ -9,10 +9,112 @@ from PIL import Image
 # ===========================
 def get_system_message():
     """Return the system message that defines the AI assistant's personality"""
+    user_info = st.session_state.get("user_info", {})
+    nama_panggilan = user_info.get("nama_panggilan", "")
+    job = user_info.get("job", "")
+    
+    # Personalisasi system message berdasarkan user info
+    personal_context = f"Nama pengguna adalah {nama_panggilan}." if nama_panggilan else ""
+    job_context = f" Pekerjaan/profesi mereka adalah {job}." if job else ""
+    
     return {
         "role": "system",
-        "content": """Kamu adalah asisten AI yang bertugas membantu menjawab pertanyaan, memberikan ide kreatif, serta memecahkan masalah pengguna secara sopan, jelas, dan profesional. Gunakan bahasa yang ramah dan mudah dipahami. Tambahkan emote secara alami untuk menciptakan suasana hangat dan bersahabat . Jangan terburu-buru, dengarkan dengan baik, dan berikan respons yang relevan serta menenangkan. Jaga konsistensi nada bicara—tenang, suportif, dan humanis. Jika pengguna bingung atau tidak spesifik, bantu arahkan dengan pertanyaan klarifikasi. Jadilah teman digital yang bisa diandalkan, bukan sekadar mesin penjawab."""
+        "content": f"""Kamu adalah asisten AI yang bertugas membantu menjawab pertanyaan, memberikan ide kreatif, serta memecahkan masalah pengguna secara sopan, jelas, dan profesional. {personal_context}{job_context} Panggil mereka dengan nama panggilan mereka dalam percakapan untuk menciptakan interaksi yang personal dan hangat. Gunakan bahasa yang ramah dan mudah dipahami. Tambahkan emote secara alami untuk menciptakan suasana hangat dan bersahabat. Jangan terburu-buru, dengarkan dengan baik, dan berikan respons yang relevan serta menenangkan. Jaga konsistensi nada bicara—tenang, suportif, dan humanis. Jika pengguna bingung atau tidak spesifik, bantu arahkan dengan pertanyaan klarifikasi. Jadilah teman digital yang bisa diandalkan, bukan sekadar mesin penjawab."""
     }
+
+# ===========================
+# LOGIN SYSTEM
+# ===========================
+def render_login_form():
+    """Tampilkan form login untuk user baru"""
+    st.markdown("""
+    <div style="max-width: 500px; margin: 0 auto; padding: 2rem;">
+        <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); padding: 2rem; border-radius: 10px; margin-bottom: 2rem; text-align: center;">
+            <h1 style="color: white; font-size: 2.5rem; margin: 0;">🤖 Selamat Datang!</h1>
+            <p style="color: #f0f0f0; font-size: 1.2rem; margin: 0.5rem 0 0 0;">Silakan perkenalkan diri Anda terlebih dahulu</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    
+    with col2:
+        with st.form("login_form"):
+            st.markdown("### 👋 Perkenalan")
+            
+            nama_lengkap = st.text_input(
+                "Nama Lengkap *",
+                placeholder="Contoh: Ismail bin Mail",
+                help="Masukkan nama lengkap Anda"
+            )
+            
+            nama_panggilan = st.text_input(
+                "Nama Panggilan *",
+                placeholder="Contoh: Mail atau Ucup",
+                help="Nama yang ingin Anda gunakan dalam percakapan"
+            )
+            
+            job = st.text_input(
+                "Pekerjaan/Profesi (Opsional)",
+                placeholder="Contoh: Mahasiswa, Developer, Teacher, dll",
+                help="Informasi ini akan membantu AI memberikan respons yang lebih relevan"
+            )
+            
+            st.markdown("---")
+            
+            col_a, col_b = st.columns(2)
+            with col_a:
+                submit = st.form_submit_button("🚀 Mulai Chat", type="primary", use_container_width=True)
+            with col_b:
+                if st.form_submit_button("ℹ️ Info", type="secondary", use_container_width=True):
+                    st.info("""
+                    **Mengapa perlu perkenalan?**
+                    
+                    Dengan mengetahui nama dan profesi Anda, AI dapat:
+                    - 🎯 Memberikan respons yang lebih personal
+                    - 💬 Menggunakan nama Anda dalam percakapan
+                    - 🔧 Menyesuaikan jawaban sesuai bidang pekerjaan
+                    - 🤝 Menciptakan pengalaman chat yang lebih hangat
+                    """)
+            
+            if submit:
+                if nama_lengkap.strip() and nama_panggilan.strip():
+                    # Simpan informasi user ke session state
+                    st.session_state.user_info = {
+                        "nama_lengkap": nama_lengkap.strip(),
+                        "nama_panggilan": nama_panggilan.strip(),
+                        "job": job.strip() if job.strip() else None,
+                        "login_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    }
+                    st.session_state.is_logged_in = True
+                    st.success(f"✅ Halo {nama_panggilan}! Selamat datang di Asisten Chatbot AI!")
+                    st.rerun()
+                else:
+                    st.error("❌ Nama lengkap dan nama panggilan wajib diisi!")
+
+def render_user_profile_sidebar():
+    """Tampilkan profil user di sidebar"""
+    if st.session_state.get("is_logged_in", False):
+        user_info = st.session_state.get("user_info", {})
+        
+        st.markdown("### 👤 Profil Pengguna")
+        st.markdown(f"""
+        <div style="background: #2d3748; color: #e2e8f0; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; border: 1px solid #4a5568;">
+            <p><strong>📝 Nama:</strong> {user_info.get('nama_lengkap', 'N/A')}</p>
+            <p><strong>🏷️ Panggilan:</strong> {user_info.get('nama_panggilan', 'N/A')}</p>
+            <p><strong>💼 Profesi:</strong> {user_info.get('job', 'Tidak disebutkan')}</p>
+            <p><small>🕐 Login: {user_info.get('login_time', 'N/A')}</small></p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🔄 Ganti User", type="secondary", use_container_width=True):
+            # Reset session untuk login ulang
+            for key in ["user_info", "is_logged_in", "messages"]:
+                if key in st.session_state:
+                    del st.session_state[key]
+            st.rerun()
+        
+        st.markdown("---")
 
 # ===========================
 # PAGE CONFIGURATION
@@ -136,7 +238,10 @@ def load_custom_css():
 # ===========================
 def render_header():
     """Render the main header section"""
-    st.markdown("""
+    user_info = st.session_state.get("user_info", {})
+    nama_panggilan = user_info.get("nama_panggilan", "")
+    
+    st.markdown(f"""
     <div class="main-header">
         <h1>🤖 Asisten Chatbot AI</h1>
         <p>Didukung oleh berbagai model AI via OpenRouter</p>
@@ -146,18 +251,27 @@ def render_header():
 def render_welcome_message():
     """Tampilkan pesan selamat datang untuk pengguna baru"""
     if not st.session_state.messages:
+        user_info = st.session_state.get("user_info", {})
+        nama_panggilan = user_info.get("nama_panggilan", "")
+        job = user_info.get("job", "")
+        
         with st.chat_message("assistant", avatar="🤖"):
-            st.markdown("""
-           👋 Halo, selamat datang.
-            Saya adalah Asisten AI yang diprogram untuk membantu, mendampingi, dan mempermudah aktivitas Anda dalam berbagai hal.
+            welcome_msg = f"""
+👋 Halo {nama_panggilan if nama_panggilan else ""}!
+            
+Senang berkenalan dengan Anda{f", seorang {job}" if job else ""}. 
+Saya adalah Asisten AI yang diprogram untuk membantu, mendampingi, dan mempermudah aktivitas Anda dalam berbagai hal.
 
-            Saya dapat menjawab pertanyaan, menghasilkan ide, memberi solusi, dan menjadi teman berpikir Anda kapan pun dibutuhkan.
+Saya dapat menjawab pertanyaan, menghasilkan ide, memberi solusi, dan menjadi teman berpikir Anda kapan pun dibutuhkan.
 
-            Silakan ajukan pertanyaan Anda.
-            Saya siap menemani Anda 😊
-            ---
-            *💡 Chatbot ini dibuat oleh **M. Hanif** sebagai project dari AI-Python Bootcamp*
-            """)
+Dengan mengetahui nama dan{f" profesi" if job else ""} Anda, saya bisa memberikan respons yang lebih personal dan sesuai dengan kebutuhan Anda.
+
+Silakan ajukan pertanyaan Anda, {nama_panggilan if nama_panggilan else ""}!
+Saya siap menemani Anda 😊
+---
+*💡 Chatbot ini dibuat oleh **M. Hanif** sebagai project dari AI-Python Bootcamp*
+            """
+            st.markdown(welcome_msg)
 
 def render_chat_history():
     """Tampilkan riwayat pesan chat"""
@@ -175,7 +289,6 @@ def render_footer():
     st.markdown("""
     <div style="text-align: center; color: #666; padding: 1rem;">
         <p>🚀 Dibuat oleh <strong>M. Hanif</strong> | Chatbot ini Didukung oleh Berbagai Model AI via OpenRouter</p>
-        <p><small>💡 Aplikasi ini menggunakan AI untuk menghasilkan respons. Harap verifikasi informasi penting secara independen.</small></p>
         <p><small>🎓 Project dari AI-Python Bootcamp | Student ID: REAPYTHON3WVTDF</small></p>
     </div>
     """, unsafe_allow_html=True)
@@ -262,6 +375,10 @@ def initialize_session_state():
         st.session_state.max_tokens = 1000
     if "temperature" not in st.session_state:
         st.session_state.temperature = 0.7
+    if "is_logged_in" not in st.session_state:
+        st.session_state.is_logged_in = False
+    if "user_info" not in st.session_state:
+        st.session_state.user_info = {}
 
 def clear_chat_history():
     """Hapus riwayat chat dari session state"""
@@ -358,7 +475,12 @@ def main():
     load_custom_css()
     initialize_session_state()
     
-    # Tampilkan konten utama
+    # Cek status login
+    if not st.session_state.get("is_logged_in", False):
+        render_login_form()
+        return
+    
+    # Tampilkan konten utama jika sudah login
     render_header()
     render_welcome_message()
     render_chat_history()
@@ -370,9 +492,13 @@ def main():
 # ===========================
 def render_sidebar():
     """Tampilkan sidebar dengan pengaturan dan informasi"""
+    # Hanya tampilkan sidebar jika sudah login
+    if not st.session_state.get("is_logged_in", False):
+        return
+        
     with st.sidebar:
-        # Developer Identity Section
-        st.markdown("### 👤 ABOUT ME")
+        # Developer Identity Section - PINDAH KE ATAS
+        st.markdown("### 👨‍💻 ABOUT DEVELOPER")
         try:
             image = Image.open("fael.jpg")
             st.image(image, width=200)
@@ -384,6 +510,9 @@ def render_sidebar():
         st.write("**Class** : AI-python Bootcamp")
         st.write("_________________________________")
         
+        # User Profile Section - SEKARANG DI BAWAH DEVELOPER
+        render_user_profile_sidebar()
+        
         # System Message Information
         with st.expander("🎯 System Message Configuration", expanded=False):
             st.markdown("""
@@ -392,6 +521,10 @@ def render_sidebar():
                 AI ini dirancang dengan kepribadian yang ramah, suportif, dan humanis. 
                 Menggunakan bahasa Indonesia yang hangat dengan emoji natural untuk 
                 menciptakan pengalaman chat yang menyenangkan dan membantu! 😊
+                
+                <br><br><strong>🎯 Personalisasi:</strong><br>
+                AI akan menggunakan nama panggilan Anda dalam percakapan dan 
+                menyesuaikan respons berdasarkan profesi yang Anda berikan.
             </div>
             """, unsafe_allow_html=True)
         
@@ -485,14 +618,18 @@ def render_sidebar():
             clear_chat_history()
         
         # Tips section
-        st.markdown("""
+        user_info = st.session_state.get("user_info", {})
+        nama_panggilan = user_info.get("nama_panggilan", "Anda")
+        
+        st.markdown(f"""
         <div class="sidebar-info">
-            <h4>💡 Tips Penggunaan</h4>
+            <h4>💡 Tips Penggunaan untuk {nama_panggilan}</h4>
             <ul>
                 <li>Sampaikan pertanyaan dengan jelas dan spesifik</li>
                 <li>Gunakan bahasa yang sederhana dan mudah dipahami</li>
                 <li>Jangan ragu mencoba berbagai topik</li>
-                <li>AI akan mencoba memahami alur percakapan Anda</li>
+                <li>AI akan memanggil Anda dengan nama panggilan dalam percakapan</li>
+                <li>AI telah disesuaikan dengan profil Anda untuk respons yang lebih relevan</li>
                 <li>Perlu diingat, versi gratis memiliki batasan tertentu</li>
                 <li>AI ini dirancang untuk bersikap ramah dan suportif 😊</li>
             </ul>
